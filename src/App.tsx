@@ -1,11 +1,11 @@
-import KanbanColumn from './componemt/karban/KanbanColumn'
+import KanbanBoard from './componemt/kanban/KanbanBoard'
 
 function App() {
 
 
   return (
     <>
-      <KanbanColumn/>
+<KanbanBoard/>
     </>
   )
 }
