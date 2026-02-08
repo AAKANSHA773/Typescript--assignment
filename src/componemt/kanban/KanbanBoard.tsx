@@ -15,13 +15,13 @@ function KanbanBoard() {
       id: "progress",
       title: "In Progress",
       color: "bg-orange-500",
-      cards: [],
+      cards: [{ id: "2", title: "Implement Authentication" }],
     },
     {
       id: "done",
       title: "Done",
       color: "bg-green-600",
-      cards: [],
+      cards: [{ id: "3", title: "Organize project repository" }],
     },
   ]);
 

@@ -40,14 +40,15 @@ function KanbanCard({ card, columnId, deleteCard, updateCard }: Props) {
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
       <div
-        className={`w-1.5 self-stretch rounded-sm ${
-          columnId === "todo"
-            ? "bg-yellow-400"
-            : columnId === "progress"
-              ? "bg-yellow-500"
-              : "bg-yellow-500"
-        }`}
-      />
+  onClick={() => setEdit(true)}
+  title="Click to edit"
+ className={`w-2 self-stretch rounded-sm cursor-pointer hover:brightness-110 ${
+  columnId === "todo"
+    ? "bg-yellow-400"
+    : columnId === "progress"
+    ? "bg-orange-500"
+    : "bg-green-500"
+}`}/>
       <div className="flex-1">
         {edit ? (
           <input
