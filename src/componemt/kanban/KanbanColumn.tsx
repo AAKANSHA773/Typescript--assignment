@@ -63,7 +63,7 @@ function KanbanColumn({
       <div className="p-3">
         <button
           onClick={() => setShowAddForm(true)}
-          className="w-full border border-dashed border-gray-400 rounded-lg py-2 text-sm hover:bg-gray-200"
+          className="w-28 border border-gray border-gray-400 rounded-lg py-1 text-sm hover:bg-gray-200"
         >
           + Add Card
 
