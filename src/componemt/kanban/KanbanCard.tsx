@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDrag } from "react-dnd";
 
-interface CardType {
+export interface CardType {
   id: string;
   title: string;
 }
@@ -16,7 +16,6 @@ interface Props {
 function KanbanCard({ card, columnId, deleteCard, updateCard }: Props) {
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState(card.title);
-
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "CARD",
     item: { id: card.id, columnId },
