@@ -9,7 +9,7 @@ function KanbanBoard() {
       id: "todo",
       title: "Todo",
       color: "bg-blue-600",
-      cards: [{ id: "1", title: "Sample task" }],
+      cards: [{ id: "1", title: "Create inital project plan" }],
     },
     {
       id: "progress",
@@ -26,24 +26,19 @@ function KanbanBoard() {
   ]);
 
 
-  const addCard = (columnId: string) => {
-    const input = prompt("Enter card title");
-    if (!input) return;
+  const addCard = (columnId: string, title: string) => {
+  setColumns((prev) =>
+    prev.map((col) =>
+      col.id === columnId
+        ? {
+            ...col,
+            cards: [...col.cards, { id: Date.now().toString(), title }],
+          }
+        : col
+    )
+  );
+};
 
-    setColumns((prev) =>
-      prev.map((col) =>
-        col.id === columnId
-          ? {
-              ...col,
-              cards: [
-                ...col.cards,
-                { id: Date.now().toString(), title: input },
-              ],
-            }
-          : col
-      )
-    );
-  };
 
   const deleteCard = (cardId: string, columnId: string) => {
     setColumns((prev) =>

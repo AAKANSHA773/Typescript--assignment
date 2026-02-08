@@ -1,11 +1,12 @@
 import { useDrop } from "react-dnd";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect,useState } from "react";
 import KanbanCard from "./KanbanCard";
 import type { ColumnType } from "./Type";
+import AddCardForm from "./AddCardFrom";
 
 interface Props {
   column: ColumnType;
-  addCard: (columnId: string) => void;
+  addCard: (columnId: string, title: string) => void;
   deleteCard: (cardId: string, columnId: string) => void;
   updateCard: (cardId: string, title: string, columnId: string) => void;
   moveCard: (cardId: string, from: string, to: string) => void;
@@ -18,8 +19,9 @@ function KanbanColumn({
   updateCard,
   moveCard,
 }: Props) {
-  
+ 
   const ref = useRef<HTMLDivElement>(null);
+  const [showAddForm, setShowAddForm] = useState(false);
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "CARD",
     drop: (item: { id: string; columnId: string }) => {
@@ -30,12 +32,16 @@ function KanbanColumn({
     }),
   }));
 
-  
   useEffect(() => {
     if (ref.current) {
       drop(ref);
     }
   }, [drop]);
+
+  const handleAddCard = (title: string) => {
+    addCard(column.id, title);
+    setShowAddForm(false);
+  };
 
   return (
     <div
@@ -46,8 +52,9 @@ function KanbanColumn({
     >
       <div className={`${column.color} text-white px-4 py-3 flex justify-between items-center`}>
         <h2 className="font-semibold">{column.title}</h2>
+
         <button
-          onClick={() => addCard(column.id)}
+          onClick={() => setShowAddForm(true)}
           className="bg-white/20 px-2 py-1 rounded hover:bg-white/30"
         >
           +
@@ -55,13 +62,22 @@ function KanbanColumn({
       </div>
       <div className="p-3">
         <button
-          onClick={() => addCard(column.id)}
+          onClick={() => setShowAddForm(true)}
           className="w-full border border-dashed border-gray-400 rounded-lg py-2 text-sm hover:bg-gray-200"
         >
           + Add Card
+
+        
         </button>
       </div>
-
+      {showAddForm && (
+        <div className="px-3 pb-3">
+          <AddCardForm
+            onAdd={handleAddCard}
+            onCancel={() => setShowAddForm(false)}
+          />
+        </div>
+      )}
       <div className="px-3 pb-4 space-y-3">
         {column.cards.map((card) => (
           <KanbanCard

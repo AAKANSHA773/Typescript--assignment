@@ -16,6 +16,7 @@ interface Props {
 function KanbanCard({ card, columnId, deleteCard, updateCard }: Props) {
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState(card.title);
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "CARD",
     item: { id: card.id, columnId },
@@ -35,10 +36,18 @@ function KanbanCard({ card, columnId, deleteCard, updateCard }: Props) {
       ref={(node) => {
         if (node) drag(node);
       }}
-      className="bg-white p-3 rounded-lg shadow border flex items-start gap-2 hover:shadow-md transition"
+      className="bg-white p-3 rounded-lg shadow-sm border flex gap-3 items-start hover:shadow-md transition"
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
-      <div className="w-1 bg-yellow-400 rounded"></div>
+      <div
+        className={`w-1.5 self-stretch rounded-sm ${
+          columnId === "todo"
+            ? "bg-yellow-400"
+            : columnId === "progress"
+              ? "bg-yellow-500"
+              : "bg-yellow-500"
+        }`}
+      />
       <div className="flex-1">
         {edit ? (
           <input
@@ -50,17 +59,23 @@ function KanbanCard({ card, columnId, deleteCard, updateCard }: Props) {
             onKeyDown={(e) => e.key === "Enter" && saveChange()}
           />
         ) : (
-          <p
-            className="text-sm cursor-pointer"
-            onDoubleClick={() => setEdit(true)}
-          >
-            {card.title}
-          </p>
+          <>
+            <p
+              className="text-sm font-medium cursor-pointer"
+              onDoubleClick={() => setEdit(true)}
+            >
+              {card.title}
+            </p>
+
+            <div className="w-16 h-1 bg-gray-300 rounded mt-2" />
+          </>
         )}
       </div>
+
+
       <button
         onClick={() => deleteCard(card.id, columnId)}
-        className="text-red-500 hover:text-red-700"
+        className="text-red-400 hover:text-red-600 text-sm"
       >
         🗑
       </button>
